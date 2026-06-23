@@ -1,4 +1,4 @@
-const Account = require('../schemas/account.schema')
+const Account = require('../schemas/account.schemas')
 
 // Create a Account
 const addAccount = async (obj) => {

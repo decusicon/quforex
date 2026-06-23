@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var passport = require('passport');
 
 require('dotenv').config()
 
@@ -18,6 +20,7 @@ var walletRouter = require('./routes/wallet');
 var app = express();
 
 require('./dbconnect')
+require('./config/passport')(passport)
 
 // view engine setup
 app.engine('html', require('ejs').renderFile);
@@ -29,6 +32,20 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'quantora-forex-secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

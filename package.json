@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "sh build.sh",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
@@ -14,6 +15,10 @@
     "dotenv": "^17.4.2",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-session": "^1.17.3",
+    "bcryptjs": "^2.4.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "http-errors": "~1.6.3",
     "mongoose": "^9.7.2",
     "morgan": "~1.9.1"

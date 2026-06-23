@@ -43,6 +43,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function (req, res, next) {
+  res.locals.global_wallet_btc_address = process.env.GLOBAL_WALLET_BTC_ADDRESS;
   res.locals.currentUser = req.user;
   next();
 });

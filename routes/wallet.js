@@ -4,7 +4,7 @@ var { ensureAuthenticated } = require('../config/auth');
 
 /* GET home page. */
 router.get('/', ensureAuthenticated, function(req, res, next) {
-  res.render('settings-wallet', { title: 'Wallets | Quantora Forex' });
+  res.render('settings-wallet', { title: 'Wallet | Quantora Forex' });
 });
 
 module.exports = router;

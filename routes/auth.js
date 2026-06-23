@@ -7,12 +7,18 @@ var Account = require('../database/schemas/account.schemas');
 
 /* GET sign in page. */
 router.get('/signin', function (req, res, next) {
-  res.render('auth/signin', { title: 'Sign In | Quantora Forex' });
+  res.render('auth/signin', {
+    title: 'Sign In | Quantora Forex',
+    error: req.query.error || null,
+  });
 });
 
 /* GET sign up page. */
 router.get('/signup', function (req, res, next) {
-  res.render('auth/signup', { title: 'Create Account | Quantora Forex' });
+  res.render('auth/signup', {
+    title: 'Create Account | Quantora Forex',
+    error: req.query.error || null,
+  });
 });
 
 /* POST sign up. */
@@ -30,16 +36,25 @@ router.post('/signup', async function (req, res, next) {
     } = req.body;
 
     if (!firstName || !lastName || !email || !password || !confirmPassword || !country || !phone || !currency) {
-      return res.redirect('/auth/signup');
+      return res.render('auth/signup', {
+        title: 'Create Account | Quantora Forex',
+        error: 'All fields are required.',
+      });
     }
 
     if (password !== confirmPassword) {
-      return res.redirect('/auth/signup');
+      return res.render('auth/signup', {
+        title: 'Create Account | Quantora Forex',
+        error: 'Passwords do not match.',
+      });
     }
 
     const existingAccount = await Account.findOne({ email: email.toLowerCase().trim() });
     if (existingAccount) {
-      return res.redirect('/auth/signup');
+      return res.render('auth/signup', {
+        title: 'Create Account | Quantora Forex',
+        error: 'Email already registered.',
+      });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -65,18 +80,33 @@ router.post('/signup', async function (req, res, next) {
       return res.redirect('/dashboard');
     });
   } catch (err) {
-    return next(err);
+    return res.render('auth/signup', {
+      title: 'Create Account | Quantora Forex',
+      error: err.message || 'An error occurred during signup.',
+    });
   }
 });
 
 /* POST sign in. */
-router.post(
-  '/signin',
-  passport.authenticate('local', {
-    successRedirect: '/dashboard',
-    failureRedirect: '/auth/signin',
-  })
-);
+router.post('/signin', function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.render('auth/signin', {
+        title: 'Sign In | Quantora Forex',
+        error: 'Invalid email or password.',
+      });
+    }
+    req.login(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect('/dashboard');
+    });
+  })(req, res, next);
+});
 
 /* GET reset password page. */
 router.get('/reset-password', function (req, res, next) {

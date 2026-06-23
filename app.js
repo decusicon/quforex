@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config()
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var authRouter = require('./routes/auth');
@@ -14,6 +16,8 @@ var tradingRouter = require('./routes/trading');
 var walletRouter = require('./routes/wallet');
 
 var app = express();
+
+require('./dbconnect')
 
 // view engine setup
 app.engine('html', require('ejs').renderFile);

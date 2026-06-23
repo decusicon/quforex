@@ -1,4 +1,31 @@
 module.exports = {
+    AccountTypes: {
+        SILVER: 'SILVER',
+        PREMIUM: 'PREMIUM',
+        GOLD: 'GOLD'
+    },
+    AccountStatuses: {
+        UNVERIFIED: 'unverified',
+        VERIFIED: 'verified'
+    },
+    AccountRoles: {
+        MEMBER: 'member',
+        ADMIN: 'admin'
+    },
+    TransactionStatuses: {
+        PENDING: 'pending',
+        COMPLETED: 'completed',
+        FAILED: 'failed'
+    },
+    TradeStatuses: {
+        OPEN: 'open',
+        CLOSED: 'closed',
+        CANCELLED: 'cancelled'
+    },
+    OrderStatuses: {
+        PENDING: 'pending',
+        COMPLETED: 'completed'
+    },
     Symbols: {
         CryptoPairs: {
             BTCUSD: 'BTC/USD',
@@ -107,41 +134,5 @@ module.exports = {
         CNY: 'CNY',
         SEK: 'SEK',
         NZD: 'NZD'
-    },
-    TransactionTypes: {
-        DEPOSIT: 'Deposit',
-        WITHDRAWAL: 'Withdrawal',
-    },
-    TransactionStatuses: {
-        PENDING: 'Pending',
-        COMPLETED: 'Completed',
-        FAILED: 'Failed'
-    },
-    AccountTypes: {
-        SILVER: 'Silver',
-        PREMIUM: 'Premium',
-        GOLD: 'Gold'
-    },
-    AccountStatuses: {
-        VERIFIED: 'Verified',
-        UNVERIFIED: 'Unverified',
-    },
-    TradeTypes: {
-        BUY: 'Buy',
-        SELL: 'Sell'
-    },
-    TradeStatuses: {
-        OPEN: 'Open',
-        CLOSED: 'Closed',
-        CANCELLED: 'Cancelled'
-    },
-    OrderTypes: {
-        MARKET: 'Market',
-        LIMIT: 'Limit',
-        STOP: 'Stop'
-    },
-    OrderStatuses: {
-        PENDING: 'Pending',
-        COMPLETED: 'Completed'
-    },
+    }
 };

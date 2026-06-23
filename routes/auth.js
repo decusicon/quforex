@@ -79,7 +79,7 @@ router.post(
 
 /* GET reset password page. */
 router.get('/reset-password', function (req, res, next) {
-  res.render('auth/reset-password', { title: 'Reset Password | Quantora Forex' });
+  res.render('auth/reset-password', { title: 'Forgot Password | Quantora Forex' });
 });
 
 /* GET logout. */

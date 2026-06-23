@@ -55,14 +55,16 @@
                           <li class="w-100">
                             <div class="row">
                               <div class="col-md-12">
-                                <div class="input-group">
-                                  <input type="text" class="form-control" placeholder="Enter Amount (0.00)">
+                                <form method="post" action="/wallet/deposit">
+                                  <div class="input-group">
+                                  <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)">
                                   <div class="input-group-prepend">
-                                    <select name="currency" id="currency" class="form-control" required>
+                                    <select name="method" id="method" class="form-control" required>
                                       <option value="bitcoin" selected>Bitcoin</option>
                                     </select>
                                   </div>
-                                </div>
+                                </div> 
+                                </form>
                               </div>
                             </div>
                           </li>
@@ -103,7 +105,7 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Latest Transactions</h5>
-                        <div class="wallet-history">
+                        <div class="wallet-history" id="wallet-history">
                           <table class="table">
                             <thead>
                               <tr>
@@ -111,6 +113,7 @@
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Amount</th>
+                                <th>Method</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -119,30 +122,35 @@
                                 <td>25-04-2019</td>
                                 <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
                                 <td>4.5454334</td>
+                                <td>Bitcoin</td>
                               </tr>
                               <tr>
                                 <td>2</td>
                                 <td>25-05-2019</td>
                                 <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
                                 <td>0.5484468</td>
+                                <td>Bitcoin</td>
                               </tr>
                               <tr>
                                 <td>3</td>
                                 <td>25-06-2019</td>
                                 <td><i class="icon ion-md-close-circle-outline red"></i></td>
                                 <td>2.5454545</td>
+                                <td>Bitcoin</td>
                               </tr>
                               <tr>
                                 <td>4</td>
                                 <td>25-07-2019</td>
                                 <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
                                 <td>1.45894147</td>
+                                <td>Bitcoin</td>
                               </tr>
                               <tr>
                                 <td>5</td>
                                 <td>25-08-2019</td>
                                 <td><i class="icon ion-md-close-circle-outline red"></i></td>
                                 <td>2.5454545</td>
+                                <td>Bitcoin</td>
                               </tr>
                             </tbody>
                           </table>

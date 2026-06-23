@@ -935,6 +935,44 @@
     }
   });
 
+  function setupWalletActions() {
+    var $walletCard = $('#wallet-address');
+    var $walletValue = $('#wallet-address-value');
+
+    $('#deposit-wallet-btn').on('click', function () {
+      $walletCard.toggleClass('d-none');
+    });
+
+    $('#wallet-address-copy').on('click', function () {
+      if (!$walletValue.length) {
+        return;
+      }
+
+      var address = $walletValue.text().trim();
+      if (!address) {
+        return;
+      }
+
+      var tempInput = $('<textarea>')
+        .css({ position: 'absolute', left: '-9999px', top: '0' })
+        .text(address)
+        .appendTo('body');
+
+      tempInput.select();
+      document.execCommand('copy');
+      tempInput.remove();
+
+      var $button = $(this);
+      var originalText = $button.text();
+      $button.text('Copied');
+      setTimeout(function () {
+        $button.html('<i class="icon ion-md-copy"></i>');
+      }, 1500);
+    });
+  }
+
+  setupWalletActions();
+
   $('#changeThemeDark').on('click', function (e) {
     ThemeOn = !ThemeOn;
     if (ThemeOn) {

@@ -67,11 +67,13 @@
                             </div>
                           </li>
                         </ul>
-                        <button class="btn text-dark green">Deposit <i class="icon ion-md-arrow-down"></i></button>
-                        <button class="btn btn-dark">Withdraw <i class="icon ion-md-arrow-up"></i></button>
+                        <button id="deposit-wallet-btn" type="button" class="btn text-dark green">Deposit <i
+                            class="icon ion-md-arrow-down"></i></button>
+                        <button onclick="location.href='/wallet/withdraw'" type="button" class="btn btn-dark">Withdraw
+                          <i class="icon ion-md-arrow-up"></i></button>
                       </div>
                     </div>
-                    <div class="card" id="wallet-address">
+                    <div class="card d-none" id="wallet-address">
                       <div class="card-body">
                         <h5 class="card-title">Wallet Deposit Address</h5>
                         <div class="row wallet-address">
@@ -82,15 +84,18 @@
                             <br>
                             <p>Click on the Confirm button to mark this transaction as sent.</p>
                             <div class="input-group">
-                              <span class="form-control" id="wallet-address-value"><%= global_wallet_btc_address %></span>
+                              <span class="form-control" id="wallet-address-value">
+                                <%= global_wallet_btc_address %>
+                              </span>
                               <div class="input-group-prepend">
-                                <button class="badge text-white" style="background-color: transparent !important;"><i
+                                <button id="wallet-address-copy" type="button" class="badge text-white"
+                                  style="background-color: transparent !important;"><i
                                     class="icon ion-md-copy"></i></button>
                               </div>
                             </div>
                           </div>
                           <div class="col-md-12">
-                            <button class="btn btn-success">Mark as Sent</button>
+                            <button class="btn btn-success">Confirm as Sent</button>
                           </div>
                         </div>
                       </div>

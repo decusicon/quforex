@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Crypo</title>
+  <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/header.html') %>
+  <div class="settings mtb15">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 col-lg-3">
+          <div class="nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
+            aria-orientation="vertical">
+            <a class="nav-link active" id="settings-profile-tab" href="/profile"><i class="icon ion-md-person"></i>
+              Profile</a>
+            <a class="nav-link" id="settings-wallet-tab" href="/wallet"><i class="icon ion-md-wallet"></i> Wallet</a>
+            <a class="nav-link" id="settings-tab" href="/settings"><i class="icon ion-md-settings"></i> Settings</a>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="settings-profile" role="tabpanel"
+              aria-labelledby="settings-profile-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">General Information</h5>
+                  <div class="settings-profile">
+                    <form>
+                      <div class="form-row mt-4">
+                        <div class="col-md-6">
+                          <label for="formFirst">First name</label>
+                          <input id="formFirst" type="text" class="form-control" placeholder="First name">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="formLast">Last name</label>
+                          <input id="formLast" type="text" class="form-control" placeholder="Last name">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="emailAddress">Email</label>
+                          <input id="emailAddress" type="text" class="form-control" placeholder="Enter your email">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="phoneNumber">Phone</label>
+                          <input id="phoneNumber" type="text" class="form-control" placeholder="Enter phone number">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="selectLanguage">Language</label>
+                          <select name="language" id="selectLanguage" class="custom-select">
+                            <option selected>English</option>
+                            <option>Mandarin Chinese</option>
+                            <option>Spanish</option>
+                            <option>Arabic</option>
+                            <option>Russian</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="selectCurrency">Currency</label>
+                          <select name="currency" id="selectCurrency" class="custom-select">
+                            <option selected>USD</option>
+                            <option>EUR</option>
+                            <option>GBP</option>
+                            <option>CHF</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12">
+                          <label for="selectCountry">Country</label>
+                          <input type="text" name="country" id="selectCountry" class="form-control"
+                            placeholder="Enter your country">
+                        </div>
+                        <div class="col-md-12">
+                          <input type="submit" value="Update">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Security Information</h5>
+                  <div class="settings-profile">
+                    <form>
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <label for="currentPass">Current password</label>
+                          <input name="currentPass" id="currentPass" type="text" class="form-control"
+                            placeholder="Enter your password">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="newPass">New password</label>
+                          <input name="newPass" id="newPass" type="text" class="form-control"
+                            placeholder="Enter new password">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityOne">Security questions #1</label>
+                          <select name="securityOne" id="securityOne" class="custom-select">
+                            <option selected>What was the name of your first pet?</option>
+                            <option>What's your Mother's middle name?</option>
+                            <option>What was the name of your first school?</option>
+                            <option>Where did you travel for the first time?</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityAnsOne">Answer</label>
+                          <input name="securityAnsOne" id="securityAnsOne" type="text" class="form-control"
+                            placeholder="Enter your answer">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityTwo">Security questions #2</label>
+                          <select name="securityTwo" id="securityTwo" class="custom-select">
+                            <option selected>Choose...</option>
+                            <option>What was the name of your first pet?</option>
+                            <option>What's your Mother's middle name?</option>
+                            <option>What was the name of your first school?</option>
+                            <option>Where did you travel for the first time?</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityAnsTwo">Answer</label>
+                          <input name="securityAnsTwo" id="securityAnsTwo" type="text" class="form-control"
+                            placeholder="Enter your answer">
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityThree">Security questions #3</label>
+                          <select name="securityThree" id="securityThree" class="custom-select">
+                            <option selected>Choose...</option>
+                            <option>What was the name of your first pet?</option>
+                            <option>What's your Mother's middle name?</option>
+                            <option>What was the name of your first school?</option>
+                            <option>Where did you travel for the first time?</option>
+                          </select>
+                        </div>
+                        <div class="col-md-6">
+                          <label for="securityFore">Answer</label>
+                          <input name="securityFore" id="securityFore" type="text" class="form-control"
+                            placeholder="Enter your answer">
+                        </div>
+                        <div class="col-md-12">
+                          <input type="submit" value="Update">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery-3.4.1.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/amcharts-core.min.js"></script>
+  <script src="assets/js/amcharts.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+</body>
+
+
+</html>

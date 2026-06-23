@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Crypo</title>
+  <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/header.html') %>
+  <div class="settings mtb15">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 col-lg-3">
+          <div class="nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
+            aria-orientation="vertical">
+            <a class="nav-link" id="settings-profile-tab" href="/profile"><i class="icon ion-md-person"></i>
+              Profile</a>
+            <a class="nav-link" id="settings-wallet-tab" href="/wallet"><i class="icon ion-md-wallet"></i> Wallet</a>
+            <a class="nav-link active" id="settings-tab" href="/settings"><i class="icon ion-md-settings"></i>
+              Settings</a>
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Notifications</h5>
+                  <div class="settings-notification">
+                    <ul>
+                      <li>
+                        <div class="notification-info">
+                          <p>Update price</p>
+                          <span>Get the update price in your dashboard</span>
+                        </div>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="notification1">
+                          <label class="custom-control-label" for="notification1"></label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notification-info">
+                          <p>2FA</p>
+                          <span>Unable two factor authentication service</span>
+                        </div>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="notification2" checked>
+                          <label class="custom-control-label" for="notification2"></label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notification-info">
+                          <p>Latest news</p>
+                          <span>Get the latest news in your mail</span>
+                        </div>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="notification3">
+                          <label class="custom-control-label" for="notification3"></label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notification-info">
+                          <p>Email Service</p>
+                          <span>Get security code in your mail</span>
+                        </div>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="notification4" checked>
+                          <label class="custom-control-label" for="notification4"></label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="notification-info">
+                          <p>Phone Notify</p>
+                          <span>Get transition notification in your phone </span>
+                        </div>
+                        <div class="custom-control custom-switch">
+                          <input type="checkbox" class="custom-control-input" id="notification5" checked>
+                          <label class="custom-control-label" for="notification5"></label>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery-3.4.1.min.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/amcharts-core.min.js"></script>
+  <script src="assets/js/amcharts.min.js"></script>
+  <script src="assets/js/custom.js"></script>
+</body>
+
+
+</html>

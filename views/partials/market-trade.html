@@ -1,0 +1,70 @@
+<div class="market-trade mb15">
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
+      <div class="d-flex justify-content-between">
+        <div class="market-trade-buy">
+          <div class="input-group">
+            <input type="number" class="form-control" placeholder="Amount to Buy">
+            <div class="input-group-append">
+              <span class="input-group-text">Volume</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <select name="execType" id="execType" class="form-control">
+              <option value="market">Market Execution</option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-text">Type</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <select name="execType" id="execType" class="form-control">
+              <option value="BTCUSD">BTCUSD</option>
+              <option value="ETHUSD">ETHUSD</option>
+              <option value="BTHUSD">BTHUSD</option>
+              <option value="BCHUSD">BCHUSD</option>
+              <option value="XRPUSD">XRPUSD</option>
+              <option value="EOSUSD">EOSUSD</option>
+              <option value="LTCUSD">LTCUSD</option>
+              <option value="ADAUSD">ADAUSD</option>
+              <option value="SHIBA">SHIBA</option>
+              <option value="AKITA">AKITA</option>
+              <option value="DOGE">DOGE</option>
+              <option value="AXS">AXS</option>
+              <option value="BTT">BTT</option>
+              <option value="THETA">THETA</option>
+              <option value="KLEE KAI">KLEE KAI</option>
+              <option value="KAI">KAI</option>
+              <option value="HMNG">HMNG</option>
+              <option value="DNXC COIN">DNXC COIN</option>
+              <option value="ZOON COIN">ZOON COIN</option>
+              <option value="ENJOIN COIN">ENJOIN COIN</option>
+              <option value="AAVE COIN">AAVE</option>
+              <option value="DENT COIN">DENT COIN</option>
+              <option value="DOT COIN">DOT COIN</option>
+              <option value="HOKKIADU INU">HOKKIADU INU</option>
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-text">Symbol</span>
+            </div>
+          </div>
+          <div class="input-group">
+            <input type="number" name="stopLoss" id="stopLoss" class="form-control mr-1" placeholder="Stop Loss">
+            <div class="input-group-append">
+              <input type="number" name="takeProfit" id="takeProfit" class="input-group-text form-control ml-1"
+                placeholder="Take Profit">
+            </div>
+          </div>
+          <div class="input-group">
+            <input type="text" name="narration" id="narration" class="form-control" placeholder="Narration">
+          </div>
+
+          <div class="row sm-gutters">
+            <button class="col-md-6 btn buy" onclick="alert('Buy clicked')">Buy</button>
+            <button class="col-md-6 btn sell" onclick="alert('Sell clicked')">Sell</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

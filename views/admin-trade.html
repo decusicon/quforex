@@ -32,6 +32,24 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Trade Detail</h5>
+                        <% if (flash && (flash.success || flash.error)) { %>
+                          <% if (flash.success) { %>
+                            <div class="alert alert-success alert-dismissible auto-dismiss-alert show" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              <%= flash.success %>
+                            </div>
+                          <% } %>
+                          <% if (flash.error) { %>
+                            <div class="alert alert-danger alert-dismissible auto-dismiss-alert show" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                              <%= flash.error %>
+                            </div>
+                          <% } %>
+                        <% } %>
                         <div class="wallet-history" id="wallet-history">
                           <table class="table">
                             <tbody>
@@ -70,46 +88,66 @@
                             </tbody>
                           </table>
 
-                          <form method="post" action="/admin/trades/<%= trade._id %>/update">
+                          <% if (trade.traded_status !== 'completed') { %>
+                            <form method="post" action="/admin/trades/<%= trade._id %>/update">
+                              <div class="form-group">
+                                <label>Stop Loss</label>
+                                <input type="number" name="stopLoss" class="form-control" value="<%= trade.stop_loss %>" step="0.0001">
+                              </div>
+                              <div class="form-group">
+                                <label>Take Profit</label>
+                                <input type="number" name="takeProfit" class="form-control" value="<%= trade.take_profit %>" step="0.0001">
+                              </div>
+                              <div class="form-group">
+                                <label>Status</label>
+                                <select name="traded_status" class="form-control">
+                                  <option value="open" <%= trade.traded_status === 'open' ? 'selected' : '' %>>Open</option>
+                                  <option value="closed" <%= trade.traded_status === 'closed' ? 'selected' : '' %>>Closed</option>
+                                  <option value="canceled" <%= trade.traded_status === 'canceled' ? 'selected' : '' %>>Canceled</option>
+                                  <option value="completed" <%= trade.traded_status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                </select>
+                              </div>
+                              <div class="form-row">
+                                <div class="col-md-3">
+                                  <button type="submit" class="btn btn-primary" onclick="return confirm('Save changes to this trade?');">Save</button>
+                                </div>
+                                <% if (trade.traded_status !== 'closed' && trade.traded_status !== 'canceled') { %>
+                                <div class="col-md-3">
+                                  <button type="submit" formaction="/admin/trades/<%= trade._id %>/execute" formmethod="post" class="btn btn-success" onclick="return confirm('Are you sure you want to execute this trade?');">Execute</button>
+                                </div>
+                                <div class="col-md-3">
+                                  <button type="submit" formaction="/admin/trades/<%= trade._id %>/close" formmethod="post" class="btn btn-info" onclick="return confirm('Are you sure you want to close this trade?');">Close</button>
+                                </div>
+                                <div class="col-md-3">
+                                  <button type="submit" formaction="/admin/trades/<%= trade._id %>/cancel" formmethod="post" class="btn btn-warning" onclick="return confirm('Are you sure you want to cancel this trade?');">Cancel</button>
+                                </div>
+                                <% } %>
+                              </div>
+                            </form>
+
+                            <div style="margin-top:12px;">
+                              <a href="/admin/trades" class="btn btn-secondary">Back to Trades</a>
+                              <form method="post" action="/admin/trades/<%= trade._id %>/delete" style="display:inline; margin-left:8px;" onsubmit="return confirm('Delete this trade?');">
+                                <button type="submit" class="btn btn-danger">Delete Trade</button>
+                              </form>
+                            </div>
+                          <% } else { %>
                             <div class="form-group">
                               <label>Stop Loss</label>
-                              <input type="text" name="stopLoss" class="form-control" value="<%= trade.stop_loss %>">
+                              <input type="text" class="form-control" value="<%= trade.stop_loss %>" disabled>
                             </div>
                             <div class="form-group">
                               <label>Take Profit</label>
-                              <input type="text" name="takeProfit" class="form-control" value="<%= trade.take_profit %>">
+                              <input type="text" class="form-control" value="<%= trade.take_profit %>" disabled>
                             </div>
                             <div class="form-group">
                               <label>Status</label>
-                              <select name="traded_status" class="form-control">
-                                <option value="open" <%= trade.traded_status === 'open' ? 'selected' : '' %>>Open</option>
-                                <option value="closed" <%= trade.traded_status === 'closed' ? 'selected' : '' %>>Closed</option>
-                                <option value="canceled" <%= trade.traded_status === 'canceled' ? 'selected' : '' %>>Canceled</option>
-                                <option value="completed" <%= trade.traded_status === 'completed' ? 'selected' : '' %>>Completed</option>
-                              </select>
+                              <input type="text" class="form-control" value="<%= trade.traded_status %>" disabled>
                             </div>
-                            <div class="form-row">
-                              <div class="col-md-3">
-                                <button type="submit" class="btn btn-primary" onclick="return confirm('Save changes to this trade?');">Save</button>
-                              </div>
-                              <div class="col-md-3">
-                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/execute" formmethod="post" class="btn btn-success" onclick="return confirm('Are you sure you want to execute this trade?');">Execute</button>
-                              </div>
-                              <div class="col-md-3">
-                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/close" formmethod="post" class="btn btn-info" onclick="return confirm('Are you sure you want to close this trade?');">Close</button>
-                              </div>
-                              <div class="col-md-3">
-                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/cancel" formmethod="post" class="btn btn-warning" onclick="return confirm('Are you sure you want to cancel this trade?');">Cancel</button>
-                              </div>
+                            <div style="margin-top:12px;">
+                              <a href="/admin/trades" class="btn btn-secondary">Back to Trades</a>
                             </div>
-                          </form>
-
-                          <div style="margin-top:12px;">
-                            <a href="/admin/trades" class="btn btn-secondary">Back to Trades</a>
-                            <form method="post" action="/admin/trades/<%= trade._id %>/delete" style="display:inline; margin-left:8px;" onsubmit="return confirm('Delete this trade?');">
-                              <button type="submit" class="btn btn-danger">Delete Trade</button>
-                            </form>
-                          </div>
+                          <% } %>
 
                         </div>
                       </div>

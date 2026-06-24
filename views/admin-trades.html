@@ -60,19 +60,22 @@
                                     <td><%= entry.traded_status %></td>
                                     <td>
                                       <div class="d-flex align-items-center">
-                                        <a href="/admin/trades/<%= entry._id %>" class="btn btn-sm btn-primary mr-2">View</a>
-                                        <form method="post" action="/admin/trades/<%= entry._id %>/execute" style="display:inline; margin-right:6px;" onsubmit="return confirm('Are you sure you want to execute this trade?');">
-                                          <button class="btn btn-sm btn-success" type="submit">Execute</button>
-                                        </form>
-                                        <form method="post" action="/admin/trades/<%= entry._id %>/close" style="display:inline; margin-right:6px;" onsubmit="return confirm('Are you sure you want to close this trade?');">
-                                          <button class="btn btn-sm btn-info" type="submit">Close</button>
-                                        </form>
-                                        <form method="post" action="/admin/trades/<%= entry._id %>/cancel" style="display:inline; margin-right:6px;" onsubmit="return confirm('Are you sure you want to cancel this trade?');">
-                                          <button class="btn btn-sm btn-warning" type="submit">Cancel</button>
-                                        </form>
-                                        <form method="post" action="/admin/trades/<%= entry._id %>/delete" style="display:inline;" onsubmit="return confirm('Delete this trade?');">
-                                          <button type="submit" class="btn btn-sm btn-link text-danger p-0 ml-2"><i class="icon ion-md-trash"></i></button>
-                                        </form>
+                                    <% if (entry.traded_status === 'completed') { %>
+                                      <a href="/admin/trades/<%= entry._id %>" class="btn btn-sm btn-primary">View</a>
+                                    <% } else { %>
+                                      <a href="/admin/trades/<%= entry._id %>" class="btn btn-sm btn-primary mr-2">View</a>
+                                    <% if (entry.traded_status !== 'closed' && entry.traded_status !== 'canceled') { %>
+                                      <form method="post" action="/admin/trades/<%= entry._id %>/close" style="display:inline; margin-right:6px;" onsubmit="return confirm('Are you sure you want to close this trade?');">
+                                        <button class="btn btn-sm btn-info" type="submit">Close</button>
+                                      </form>
+                                      <form method="post" action="/admin/trades/<%= entry._id %>/cancel" style="display:inline; margin-right:6px;" onsubmit="return confirm('Are you sure you want to cancel this trade?');">
+                                        <button class="btn btn-sm btn-warning" type="submit">Cancel</button>
+                                      </form>
+                                    <% } %>
+                                      <form method="post" action="/admin/trades/<%= entry._id %>/delete" style="display:inline;" onsubmit="return confirm('Delete this trade?');">
+                                        <button type="submit" class="btn btn-sm btn-link text-danger p-0 ml-2"><i class="icon ion-md-trash"></i></button>
+                                      </form>
+                                    <% } %>
                                       </div>
                                     </td>
                                   </tr>

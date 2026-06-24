@@ -82,13 +82,71 @@ router.get('/trades/:tradeId', async function (req, res, next) {
 
 router.post('/trades/:tradeId/update', async function (req, res, next) {
   try {
+    const trade = await Trade.findById(req.params.tradeId);
+    if (!trade) return res.redirect('/admin/trades');
+    if (trade.traded_status === 'completed') return res.redirect('/admin/trades/' + req.params.tradeId);
+
+    const stopLossRaw = typeof req.body.stopLoss !== 'undefined' ? req.body.stopLoss.trim() : undefined;
+    const takeProfitRaw = typeof req.body.takeProfit !== 'undefined' ? req.body.takeProfit.trim() : undefined;
+    const invalidFields = [];
+
+    if (typeof stopLossRaw !== 'undefined' && stopLossRaw !== '' && !Number.isFinite(Number(stopLossRaw))) {
+      invalidFields.push('Stop Loss');
+    }
+    if (typeof takeProfitRaw !== 'undefined' && takeProfitRaw !== '' && !Number.isFinite(Number(takeProfitRaw))) {
+      invalidFields.push('Take Profit');
+    }
+
+    if (invalidFields.length) {
+      if (req.session) {
+        req.session.flash = {
+          error: invalidFields.join(' and ') + ' must be valid numbers.',
+        };
+      }
+      return res.redirect('/admin/trades/' + req.params.tradeId);
+    }
+
     const updates = {};
-    if (typeof req.body.stopLoss !== 'undefined') updates.stop_loss = req.body.stopLoss;
-    if (typeof req.body.takeProfit !== 'undefined') updates.take_profit = req.body.takeProfit;
+    let balanceDelta = 0;
+    const account = await Account.findById(trade.user);
+    const currentBalance = account ? parseFloat(account.balance) : NaN;
+
+    if (typeof stopLossRaw !== 'undefined' && stopLossRaw !== trade.stop_loss) {
+      const oldValue = parseFloat(trade.stop_loss);
+      const newValue = parseFloat(stopLossRaw);
+      if (Number.isFinite(oldValue) && Number.isFinite(newValue)) {
+        balanceDelta += newValue - oldValue;
+      }
+      updates.stop_loss = stopLossRaw;
+    }
+
+    if (typeof takeProfitRaw !== 'undefined' && takeProfitRaw !== trade.take_profit) {
+      const oldValue = parseFloat(trade.take_profit);
+      const newValue = parseFloat(takeProfitRaw);
+      if (Number.isFinite(oldValue) && Number.isFinite(newValue)) {
+        balanceDelta += newValue - oldValue;
+      }
+      updates.take_profit = takeProfitRaw;
+    }
+
     if (typeof req.body.execution_type !== 'undefined') updates.execution_type = req.body.execution_type;
     if (typeof req.body.traded_status !== 'undefined') updates.traded_status = req.body.traded_status;
 
-    await Trade.updateOne({ _id: req.params.tradeId }, updates);
+    if (Object.keys(updates).length) {
+      await Trade.updateOne({ _id: req.params.tradeId }, updates);
+    }
+
+    if (!Number.isNaN(currentBalance) && balanceDelta !== 0 && account) {
+      const newBalance = currentBalance + balanceDelta;
+      await Account.updateOne({ _id: account._id }, { balance: String(newBalance.toFixed(8)) });
+    }
+
+    if (req.session) {
+      req.session.flash = {
+        success: 'Trade updated successfully.' + (balanceDelta !== 0 ? ' Account balance adjusted.' : ''),
+      };
+    }
+
     res.redirect('/admin/trades/' + req.params.tradeId);
   } catch (err) {
     next(err);

@@ -1,4 +1,14 @@
 module.exports = {
+    WithdrawalAddressTypes: {
+        BITCOIN: 'bitcoin',
+        PERFECTMONEY: 'perfectmoney',
+        WIRETRANSFER: 'wiretransfer'
+    },
+    WithdrawalAddressDetailsTypes: {
+        BITCOIN: { "bitcoin_address": "" },
+        PERFECTMONEY: { "account_number": "", "account_name": "" },
+        WIRETRANSFER: { "account_no": "", "account_name": "", "bank_name": "", "swift_code": "", "routing_number": "", "bank_address": "" }
+    },
     AccountTypes: {
         SILVER: 'SILVER',
         PREMIUM: 'PREMIUM',
@@ -134,5 +144,5 @@ module.exports = {
         CNY: 'CNY',
         SEK: 'SEK',
         NZD: 'NZD'
-    }
+    },
 };

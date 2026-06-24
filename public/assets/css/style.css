@@ -1686,7 +1686,7 @@ tbody.ob-heading {
     color: #ffffff;
 }
 
-.settings .wallet .tab-content button.main-btn {
+.settings .wallet .tab-content .main-btn {
     padding: 12px 60px;
     margin-right: 10px;
     margin-bottom: 20px;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-const { VERIFICATION_STATUS, ROLES, ACCOUNT_TYPES, TRANSACTION_STATUS } = require('../../utils/enums')
+const { TRANSACTION_STATUS } = require('../../utils/enums')
 
 const depositSchema = new Schema(
   {

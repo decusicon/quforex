@@ -4,6 +4,8 @@ var { ensureAuthenticated } = require('../config/auth');
 var Deposit = require('../database/schemas/deposit.schemas');
 var Account = require('../database/schemas/account.schemas');
 
+// ===== DEPOSIT ROUTES =====
+
 /* GET wallet page. */
 router.get('/', ensureAuthenticated, async function(req, res, next) {
   try {
@@ -113,5 +115,7 @@ router.get('/delete-deposit/:depositId', ensureAuthenticated, async function(req
     next(err);
   }
 });
+
+// ===== WITHDRAWAL ROUTES =====
 
 module.exports = router;

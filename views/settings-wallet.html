@@ -59,7 +59,7 @@
                                   <div class="input-group">
                                   <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
                                   <div class="input-group-prepend">
-                                    <select name="method" id="method" class="form-control" required>
+                                    <select name="method" id="method" class="form-control btn btn-success" required>
                                       <option value="bitcoin" selected>Bitcoin</option>
                                     </select>
                                   </div>
@@ -71,7 +71,7 @@
                         </ul>
                         <button id="deposit-wallet-btn" type="submit" form="wallet-deposit-form" class="main-btn btn text-dark green">Deposit <i
                             class="icon ion-md-arrow-down"></i></button>
-                        <button onclick="location.href='/wallet/withdraw'" type="button" class="main-btn btn btn-dark">Withdraw
+                        <button id="withdraw-wallet-btn" type="button" class="main-btn btn btn-dark">Withdraw
                           <i class="icon ion-md-arrow-up"></i></button>
                       </div>
                     </div>

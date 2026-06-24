@@ -32,7 +32,7 @@
                   <% } else if (success) { %>
                     <div class="alert alert-success"><%= success %></div>
                   <% } %>
-                  <h5 class="card-title">General Information <% if (currentUser && currentUser.verified_status === 'verified') { %><i class="icon ion-md-ribbon text-primary"></i><% } %></h5>
+                  <h5 class="card-title">General Information <% if (currentUser && currentUser.verified_status === 'verified') { %><i class="icon ion-md-ribbon text-primary" title="<%= currentUser.verified_status %>"></i><% } %></h5>
                   <div class="settings-profile">
                     <form method="post" action="/profile">
                       <input type="hidden" name="section" value="general">

@@ -11,22 +11,13 @@ var { WithdrawalAddressTypes, WithdrawalAddressDetailsTypes } = require('../util
 /* GET wallet page. */
 router.get('/', ensureAuthenticated, async function (req, res, next) {
   try {
-    const query = req.user.role === 'admin' ? {} : { user: req.user._id };
-    let depositQuery = Deposit.find(query).sort({ created_at: -1 });
-
-    if (req.user.role === 'admin') {
-      depositQuery = depositQuery.populate('user', 'firstname lastname email');
-    }
-
-    const depositEntries = await depositQuery.lean();
+    // Always show only current user's transactions
+    const userQuery = { user: req.user._id };
+    const depositEntries = await Deposit.find(userQuery).sort({ created_at: -1 }).lean();
     const showWalletCard = req.query.showWalletCard === '1' && req.session.showWalletCard;
 
-    // fetch withdrawals matching same visibility rules (admin sees all)
-    let withdrawalQuery = Withdrawal.find(query).sort({ created_at: -1 });
-    if (req.user.role === 'admin') {
-      withdrawalQuery = withdrawalQuery.populate('user', 'firstname lastname email');
-    }
-    const withdrawalEntries = await withdrawalQuery.lean();
+    // Fetch withdrawals for current user only
+    const withdrawalEntries = await Withdrawal.find(userQuery).sort({ created_at: -1 }).lean();
 
     if (req.query.showWalletCard === '1' && !req.session.showWalletCard) {
       return res.redirect('/wallet');

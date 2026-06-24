@@ -20,14 +20,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12 col-lg-3">
-          <div class="nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
-            aria-orientation="vertical">
-            <a class="nav-link" id="settings-profile-tab" href="/profile"><i class="icon ion-md-person"></i>
-              Profile</a>
-            <a class="nav-link active" id="settings-wallet-tab" href="/wallet"><i class="icon ion-md-wallet"></i>
-              Wallet</a>
-            <a class="nav-link" id="settings-tab" href="/settings"><i class="icon ion-md-settings"></i> Settings</a>
-          </div>
+          <%- include('partials/settings-menu.html') %>
         </div>
         <div class="col-md-12 col-lg-9">
           <div class="tab-content" id="v-pills-tabContent">
@@ -75,7 +68,7 @@
                                         <% } %>
                                       </select>
                                     </div>
-                                    <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
+                                    <input type="number" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
                                   </div>
                                 </form>
                               </div>
@@ -163,7 +156,7 @@
                                 <% }) %>
                               <% } else { %>
                                 <tr>
-                                  <td colspan="5" class="text-center">No deposit transactions yet.</td>
+                                  <td colspan="6" class="text-center">No deposit transactions yet.</td>
                                 </tr>
                               <% } %>
                             </tbody>

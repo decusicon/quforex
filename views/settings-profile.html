@@ -9,8 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title><%= currentUser ? currentUser.firstname+"'s " : '' %><%= title %></title>
-  <link rel="icon" href="assets/img/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body id="dark">
@@ -19,13 +19,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12 col-lg-3">
-          <div class="nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
-            aria-orientation="vertical">
-            <a class="nav-link active" id="settings-profile-tab" href="/profile"><i class="icon ion-md-person"></i>
-              Profile</a>
-            <a class="nav-link" id="settings-wallet-tab" href="/wallet"><i class="icon ion-md-wallet"></i> Wallet</a>
-            <a class="nav-link" id="settings-tab" href="/settings"><i class="icon ion-md-settings"></i> Settings</a>
-          </div>
+          <%- include('partials/settings-menu.html') %>
         </div>
         <div class="col-md-12 col-lg-9">
           <div class="tab-content" id="v-pills-tabContent">
@@ -38,7 +32,7 @@
                   <% } else if (success) { %>
                     <div class="alert alert-success"><%= success %></div>
                   <% } %>
-                  <h5 class="card-title">General Information</h5>
+                  <h5 class="card-title">General Information <% if (currentUser && currentUser.verified_status === 'verified') { %><i class="icon ion-md-ribbon text-primary"></i><% } %></h5>
                   <div class="settings-profile">
                     <form method="post" action="/profile">
                       <input type="hidden" name="section" value="general">
@@ -120,12 +114,12 @@
     </div>
   </div>
 
-  <script src="assets/js/jquery-3.4.1.min.js"></script>
-  <script src="assets/js/popper.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/amcharts-core.min.js"></script>
-  <script src="assets/js/amcharts.min.js"></script>
-  <script src="assets/js/custom.js"></script>
+  <script src="/assets/js/jquery-3.4.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/amcharts-core.min.js"></script>
+  <script src="/assets/js/amcharts.min.js"></script>
+  <script src="/assets/js/custom.js"></script>
 </body>
 
 

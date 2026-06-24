@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <%= currentUser && currentUser.role === 'admin' ? 'Admin ' : '' %><%= title %></title>
+  <link rel=" icon" href="/assets/img/favicon.png" type="image/x-icon">
+      <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/header.html') %>
+  <div class="settings mtb15">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 col-lg-3">
+          <%- include('partials/settings-menu.html') %>
+        </div>
+        <div class="col-md-12 col-lg-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="settings-wallet" role="tabpanel"
+              aria-labelledby="settings-wallet-tab">
+              <div class="wallet">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="coinBTC" role="tabpanel">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Withdrawals</h5>
+                        <h1 class="text-white mb-4">Total Withdrawals: <%= withdrawalEntries ? withdrawalEntries.length : 0 %></h1>
+                        <div class="wallet-history" id="wallet-history">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% if (withdrawalEntries && withdrawalEntries.length) { %>
+                                <% withdrawalEntries.forEach(function(entry, index) { %>
+                                  <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= entry.created_at ? entry.created_at.toISOString().slice(0, 10) : '' %></td>
+                                    <td><%= entry.user ? (entry.user.email || (entry.user.firstname + ' ' + entry.user.lastname)) : 'Unknown' %></td>
+                                    <td>
+                                      <% if (entry.confirmation_status === 'completed') { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-checkmark-circle-outline green"></i>
+                                      <% } else if (entry.confirmation_status === 'failed') { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-close-circle-outline red"></i>
+                                      <% } else { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-time text-warning"></i>
+                                      <% } %>
+                                    </td>
+                                    <td><%= Number(entry.amount).toFixed(8) %></td>
+                                    <td><%= entry.method %></td>
+                                    <td>
+                                      <a href="/wallet/withdrawal/<%= entry._id %>" class="btn btn-sm btn-outline-primary mr-2">View</a>
+                                      <% if (currentUser && currentUser.role === 'admin' && entry.confirmation_status !== 'completed') { %>
+                                        <form method="post" action="/wallet/approve-withdrawal/<%= entry._id %>" onsubmit="return confirm('Approve this withdrawal?');" style="display:inline;margin-right:8px;">
+                                          <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                        </form>
+                                      <% } %>
+                                      <% if (currentUser && (currentUser.role === 'admin' || (entry.user && currentUser._id && entry.user._id && entry.user._id.toString() === currentUser._id.toString())) && entry.confirmation_status !== 'completed') { %>
+                                        <a href="javascript:void(0);" onclick="if(confirm('Are you sure you want to cancel this withdrawal?')) { window.location.href = '/wallet/delete-withdrawal/<%= entry._id %>'; }" class="text-danger"><i class="icon ion-md-trash"></i></a>
+                                      <% } %>
+                                    </td>
+                                  </tr>
+                                <% }) %>
+                              <% } else { %>
+                                <tr>
+                                  <td colspan="7" class="text-center">No withdrawal transactions yet.</td>
+                                </tr>
+                              <% } %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/jquery-3.4.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/amcharts-core.min.js"></script>
+  <script src="/assets/js/amcharts.min.js"></script>
+  <script src="/assets/js/custom.js"></script>
+</body>
+
+
+</html>

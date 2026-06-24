@@ -45,6 +45,7 @@ app.use(passport.session());
 app.use(function (req, res, next) {
   res.locals.global_wallet_btc_address = process.env.GLOBAL_WALLET_BTC_ADDRESS;
   res.locals.currentUser = req.user;
+  res.locals.currentPath = req.originalUrl;
   next();
 });
 app.use(express.static(path.join(__dirname, 'public')));

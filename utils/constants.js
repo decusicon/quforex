@@ -33,6 +33,7 @@ module.exports = {
         CANCELED: 'canceled'
     },
     TradeExecutionTypes: {
+        MARKET: 'market',
         PROFIT: 'profit',
         LOSS: 'loss'
     },

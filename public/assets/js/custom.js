@@ -1064,3 +1064,27 @@
     }
   });
 })(jQuery);
+
+// Auto-dismiss alerts with class 'auto-dismiss-alert' after 5-8 seconds
+;(function () {
+  try {
+    document.addEventListener('DOMContentLoaded', function () {
+      var alerts = document.querySelectorAll('.auto-dismiss-alert');
+      alerts.forEach(function (a) {
+        var delay = Math.floor(Math.random() * 3000) + 5000; // 5000-8000 ms
+        setTimeout(function () {
+          try {
+            if (window.jQuery && typeof window.jQuery(a).alert === 'function') {
+              window.jQuery(a).alert('close');
+            } else {
+              a.classList.remove('show');
+              setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
+            }
+          } catch (e) {
+            if (a.parentNode) a.parentNode.removeChild(a);
+          }
+        }, delay);
+      });
+    });
+  } catch (e) {}
+})();

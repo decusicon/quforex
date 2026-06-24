@@ -1166,17 +1166,79 @@ tbody.ob-heading {
 }
 
 .market-history table,
-.market-history tr,
-.market-history td,
-.market-history th {
+.market-history tr {
     width: 100%;
     table-layout: fixed;
+}
+
+.market-history td,
+.market-history th {
+    width: auto;
+}
+
+.market-history .table th:nth-child(1),
+.market-history .table td:nth-child(1) {
+    width: 18%;
+}
+
+.market-history .table th:nth-child(2),
+.market-history .table td:nth-child(2) {
+    width: 14%;
+}
+
+.market-history .table th:nth-child(3),
+.market-history .table td:nth-child(3) {
+    width: 12%;
+}
+
+.market-history .table th:nth-child(4),
+.market-history .table td:nth-child(4) {
+    width: 10%;
+}
+
+.market-history .table th:nth-child(5),
+.market-history .table td:nth-child(5) {
+    width: 10%;
+}
+
+.market-history .table th:nth-child(6),
+.market-history .table td:nth-child(6) {
+    width: 12%;
+}
+
+.market-history .table th:nth-child(7),
+.market-history .table td:nth-child(7) {
+    width: 12%;
+}
+
+.market-history .table th:nth-child(8),
+.market-history .table td:nth-child(8) {
+    width: 12%;
 }
 
 .market-history tr {
     float: left;
     clear: both;
     overflow: hidden;
+}
+
+.market-history .table {
+    margin-bottom: 0;
+}
+
+.market-history .table th,
+.market-history .table td {
+    padding: 6px 8px;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.market-history .table thead th {
+    font-weight: 600;
+}
+
+.market-history .table {
+    margin-bottom: 0;
 }
 
 .market-history {

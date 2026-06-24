@@ -1,9 +1,49 @@
 <div class="market-trade mb15">
+  <% if (flash && (flash.success || flash.error)) { %>
+    <% if (flash.success) { %>
+      <div class="alert alert-success alert-dismissible auto-dismiss-alert show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= flash.success %>
+      </div>
+    <% } %>
+    <% if (flash.error) { %>
+      <div class="alert alert-danger alert-dismissible auto-dismiss-alert show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= flash.error %>
+      </div>
+    <% } %>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var alerts = document.querySelectorAll('.auto-dismiss-alert');
+        alerts.forEach(function (a) {
+          var delay = Math.floor(Math.random() * 3000) + 5000; // 5000-8000 ms
+          setTimeout(function () {
+            try {
+              // try to use Bootstrap's jQuery-based close if available
+              if (window.jQuery && typeof window.jQuery(a).alert === 'function') {
+                window.jQuery(a).alert('close');
+              } else {
+                // fallback: remove element with fade
+                a.classList.remove('show');
+                setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 200);
+              }
+            } catch (e) {
+              if (a.parentNode) a.parentNode.removeChild(a);
+            }
+          }, delay);
+        });
+      });
+    </script>
+  <% } %>
   <div class="tab-content">
     <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
       <div class="d-flex justify-content-between">
         <div class="market-trade-buy">
-          <form id="market-trade-buy-sell-form" class="market-trade-form">
+          <form id="market-trade-buy-sell-form" class="market-trade-form" method="post" action="/trading/market">
             <div class="input-group">
               <input type="number" name="volume" id="volume" class="form-control" placeholder="Amount to (Buy/Sell)" required>
               <div class="input-group-append">
@@ -11,7 +51,7 @@
               </div>
             </div>
             <div class="input-group">
-              <select name="tradeType" id="tradeType" class="form-control" required>
+              <select name="execType" id="execType" class="form-control" required>
                 <option value="market">Market Execution</option>
               </select>
               <div class="input-group-append">
@@ -50,8 +90,8 @@
             </div>
 
             <div class="row sm-gutters">
-              <button class="col-md-6 btn buy" id="buyBtn">Buy</button>
-              <button class="col-md-6 btn sell" id="sellBtn">Sell</button>
+              <button type="submit" name="tradeType" value="buy" class="col-md-6 btn buy" id="buyBtn">Buy</button>
+              <button type="submit" name="tradeType" value="sell" class="col-md-6 btn sell" id="sellBtn">Sell</button>
             </div>
           </form>
         </div>

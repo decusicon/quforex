@@ -12,7 +12,7 @@ const tradeSchema = new Schema(
     take_profit: { type: String, required: true, default: '0.0000' },
     comment: { type: String, required: true, default: 'No comment' },
     traded_status: { type: String, required: true, default: TRADE_STATUSES[0], enum: TRADE_STATUSES },
-    time_to_exp: { type: Date, required: true, default: Date.now + 24 * 60 * 60 * 1000 }, // Time to expiration is 24hrs
+    time_to_exp: { type: Date, required: true, default: () => Date.now() + 24 * 60 * 60 * 1000 }, // Time to expiration is 24hrs
     execution_type: { type: String, required: true, enum: TRADE_EXECUTION_TYPES },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }

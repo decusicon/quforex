@@ -5,7 +5,7 @@ const WITHDRAWAL_ADDRESS_TYPES = [WithdrawalAddressTypes.BITCOIN, WithdrawalAddr
 const ROLES = [AccountRoles.MEMBER, AccountRoles.ADMIN]
 const ACCOUNT_TYPES = [AccountTypes.SILVER, AccountTypes.PREMIUM, AccountTypes.GOLD]
 const TRADE_STATUSES = [TradeStatuses.OPEN, TradeStatuses.CLOSED, TradeStatuses.CANCELED]
-const TRADE_EXECUTION_TYPES = [TradeExecutionTypes.PROFIT, TradeExecutionTypes.LOSS]
+const TRADE_EXECUTION_TYPES = [TradeExecutionTypes.MARKET, TradeExecutionTypes.PROFIT, TradeExecutionTypes.LOSS]
 const TRADE_TYPES = [TradeTypes.BUY, TradeTypes.SELL]
 
 

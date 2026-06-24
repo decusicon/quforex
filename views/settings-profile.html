@@ -28,9 +28,19 @@
               <div class="card">
                 <div class="card-body">
                   <% if (error) { %>
-                    <div class="alert alert-danger"><%= error %></div>
+                    <div class="alert alert-danger alert-dismissible auto-dismiss-alert show" role="alert">
+                      <%= error %>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
                   <% } else if (success) { %>
-                    <div class="alert alert-success"><%= success %></div>
+                    <div class="alert alert-success alert-dismissible auto-dismiss-alert show" role="alert">
+                      <%= success %>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
                   <% } %>
                   <h5 class="card-title">General Information <% if (currentUser && currentUser.verified_status === 'verified') { %><i class="icon ion-md-ribbon text-primary" title="<%= currentUser.verified_status %>"></i><% } %></h5>
                   <div class="settings-profile">

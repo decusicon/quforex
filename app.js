@@ -48,6 +48,9 @@ app.use(function (req, res, next) {
   res.locals.global_wallet_btc_address = process.env.GLOBAL_WALLET_BTC_ADDRESS;
   res.locals.currentUser = req.user;
   res.locals.currentPath = req.originalUrl;
+  // expose any session flash messages to templates, then clear
+  res.locals.flash = req.session && req.session.flash ? req.session.flash : {};
+  if (req.session && req.session.flash) delete req.session.flash;
   next();
 });
 app.use(express.static(path.join(__dirname, 'public')));

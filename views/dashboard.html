@@ -8,9 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>
-    <%= title %>
-  </title>
+  <title><%= title %></title>
   <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
@@ -68,70 +66,126 @@
             <div class="market-history market-order mt15">
               <ul class="nav nav-pills" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="pill" href="#open-orders" role="tab" aria-selected="true">Open
-                    Orders</a>
+                  <a class="nav-link active" data-toggle="pill" href="#open-orders" role="tab" aria-selected="true">Open Orders</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#stop-orders" role="tab" aria-selected="false">Closed
-                    Orders</a>
+                  <a class="nav-link" data-toggle="pill" href="#stop-orders" role="tab" aria-selected="false">Closed Orders</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#order-history" role="tab" aria-selected="false">Order
-                    history</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#trade-history" role="tab"
-                    aria-selected="false">Balance</a>
+                  <a class="nav-link" data-toggle="pill" href="#order-history" role="tab" aria-selected="false">Order history</a>
                 </li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane fade show active" id="open-orders" role="tabpanel">
-                  <ul class="d-flex justify-content-between market-order-item">
-                    <li>Time</li>
-                    <li>All pairs</li>
-                    <li>All Types</li>
-                    <li>Buy/Sell</li>
-                    <li>Price</li>
-                    <li>Amount</li>
-                    <li>Executed</li>
-                    <li>Unexecuted</li>
-                  </ul>
-                  <span class="no-data">
-                    <i class="icon ion-md-document"></i>
-                    No data
-                  </span>
+                  <% if (openTrades && openTrades.length) { %>
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Pair</th>
+                          <th>Exec Type</th>
+                          <th>Buy/Sell</th>
+                          <th>Volume</th>
+                          <th>Stop Loss</th>
+                          <th>Take Profit</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% openTrades.forEach(function(t) { %>
+                          <tr>
+                            <td><%= t.created_at ? t.created_at.toISOString().replace('T',' ').slice(0,19) : '' %></td>
+                            <td><%= t.symbol %></td>
+                            <td><%= t.execution_type || t.execType || '-' %></td>
+                            <td><%= t.trade_type %></td>
+                            <td><%= t.volume %></td>
+                            <td><%= t.stop_loss %></td>
+                            <td><%= t.take_profit %></td>
+                            <td><%= t.traded_status %></td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  <% } else { %>
+                    <span class="no-data">
+                      <i class="icon ion-md-document"></i>
+                      No open orders
+                    </span>
+                  <% } %>
                 </div>
                 <div class="tab-pane fade" id="stop-orders" role="tabpanel">
-                  <ul class="d-flex justify-content-between market-order-item">
-                    <li>Time</li>
-                    <li>All pairs</li>
-                    <li>All Types</li>
-                    <li>Buy/Sell</li>
-                    <li>Price</li>
-                    <li>Amount</li>
-                    <li>Executed</li>
-                    <li>Unexecuted</li>
-                  </ul>
-                  <span class="no-data">
-                    <i class="icon ion-md-document"></i>
-                    No data
-                  </span>
+                  <% if (closedTrades && closedTrades.length) { %>
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Pair</th>
+                          <th>Exec Type</th>
+                          <th>Buy/Sell</th>
+                          <th>Volume</th>
+                          <th>Stop Loss</th>
+                          <th>Take Profit</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% closedTrades.forEach(function(t) { %>
+                          <tr>
+                            <td><%= t.created_at ? t.created_at.toISOString().replace('T',' ').slice(0,19) : '' %></td>
+                            <td><%= t.symbol %></td>
+                            <td><%= t.execution_type || t.execType || '-' %></td>
+                            <td><%= t.trade_type %></td>
+                            <td><%= t.volume %></td>
+                            <td><%= t.stop_loss %></td>
+                            <td><%= t.take_profit %></td>
+                            <td><%= t.traded_status %></td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  <% } else { %>
+                    <span class="no-data">
+                      <i class="icon ion-md-document"></i>
+                      No closed orders
+                    </span>
+                  <% } %>
                 </div>
                 <div class="tab-pane fade" id="order-history" role="tabpanel">
-                  <ul class="d-flex justify-content-between market-order-item">
-                    <li>Time</li>
-                    <li>All pairs</li>
-                    <li>All Types</li>
-                    <li>Buy/Sell</li>
-                    <li>Price</li>
-                    <li>Amount</li>
-                    <li>Executed</li>
-                    <li>Unexecuted</li>
-                  </ul>
-                  <span class="no-data">
-                    <i class="icon ion-md-document"></i>
-                    No data
-                  </span>
+                  <% if (historyTrades && historyTrades.length) { %>
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Pair</th>
+                          <th>Exec Type</th>
+                          <th>Buy/Sell</th>
+                          <th>Volume</th>
+                          <th>Stop Loss</th>
+                          <th>Take Profit</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% historyTrades.forEach(function(t) { %>
+                          <tr>
+                            <td><%= t.created_at ? t.created_at.toISOString().replace('T',' ').slice(0,19) : '' %></td>
+                            <td><%= t.symbol %></td>
+                            <td><%= t.execution_type || t.execType || '-' %></td>
+                            <td><%= t.trade_type %></td>
+                            <td><%= t.volume %></td>
+                            <td><%= t.stop_loss %></td>
+                            <td><%= t.take_profit %></td>
+                            <td><%= t.traded_status %></td>
+                          </tr>
+                        <% }) %>
+                      </tbody>
+                    </table>
+                  <% } else { %>
+                    <span class="no-data">
+                      <i class="icon ion-md-document"></i>
+                      No order history
+                    </span>
+                  <% } %>
                 </div>
                 <div class="tab-pane fade" id="trade-history" role="tabpanel">
                   <ul class="d-flex justify-content-between market-order-item">

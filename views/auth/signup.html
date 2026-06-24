@@ -20,7 +20,7 @@
       <form method="post" action="/auth/signup">
         <span>Create Account</span>
         <% if (typeof error !== 'undefined' && error) { %>
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert alert-danger alert-dismissible auto-dismiss-alert show" role="alert">
             <%= error %>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 20px; height: 20px;">
               <span aria-hidden="true">&times;</span>

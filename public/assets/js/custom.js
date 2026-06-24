@@ -939,6 +939,81 @@
     var $walletCard = $('#wallet-address');
     var $walletValue = $('#wallet-address-value');
 
+    $('#withdraw-wallet-btn').on('click', function () {
+      var amount = $('#amount').val();
+      var methodSelect = $('#withdraw-method');
+      var method = methodSelect.val();
+      var balance = parseFloat($('#wallet-balance').data('value')) || 0;
+      var availableMethods = JSON.parse(methodSelect.attr('data-withdraw-methods') || '[]');
+
+      if (!amount) {
+        alert('Please enter a withdrawal amount before proceeding.');
+        return;
+      }
+
+      var parsedAmount = parseFloat(amount);
+      if (isNaN(parsedAmount) || parsedAmount < 10) {
+        alert('Withdrawal amount must be at least 10.');
+        return;
+      }
+
+      if (parsedAmount > balance) {
+        alert('Withdrawal amount cannot exceed your available balance.');
+        return;
+      }
+
+      if (availableMethods.length > 1 && methodSelect.find('option').length === 1) {
+        methodSelect.empty();
+        availableMethods.forEach(function (item) {
+          var label = item.charAt(0).toUpperCase() + item.slice(1);
+          methodSelect.append('<option value="' + item + '">' + label + '</option>');
+        });
+        alert('Please choose your withdrawal method and to confirm Withdrawal.');
+        return;
+      }
+
+      if (availableMethods.length === 1) {
+        method = availableMethods[0];
+      }
+
+      $.ajax({
+        url: '/wallet/withdraw/prepare',
+        method: 'POST',
+        data: { amount: amount, method: method },
+        success: function (result) {
+          if (result && result.redirect) {
+            window.location.href = result.redirect;
+          }
+        },
+        error: function (xhr) {
+          var msg = 'Unable to start withdrawal flow. Please try again.';
+          try {
+            if (xhr && xhr.responseJSON && xhr.responseJSON.error) {
+              msg = xhr.responseJSON.error;
+            } else if (xhr && xhr.responseText) {
+              // prefer plain text error responses from server
+              msg = xhr.responseText;
+            }
+          } catch (e) {}
+
+          var $target = $('#settings-wallet').length ? $('#settings-wallet') : $('.settings');
+          var alertHtml = '<div class="alert alert-danger alert-dismissible fade show" role="alert">' +
+            msg +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 20px; height: 20px;">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button></div>';
+
+          // Prepend alert to the balances card body if present, otherwise to top of settings
+          var $cardBody = $target.find('.card').first().find('.card-body');
+          if ($cardBody.length) {
+            $cardBody.prepend(alertHtml);
+          } else {
+            $target.prepend(alertHtml);
+          }
+        },
+      });
+    });
+
     $('#wallet-address-copy').on('click', function () {
       if (!$walletValue.length) {
         return;

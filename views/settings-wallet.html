@@ -39,6 +39,14 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Balances</h5>
+                        <% if (typeof withdrawError !== 'undefined' && withdrawError) { %>
+                          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <%= withdrawError %>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 20px; height: 20px;">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                        <% } %>
                         <ul>
                           <li class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
@@ -46,7 +54,7 @@
                               <h2>Total Balance (Deposit / Withdraw below)</h2>
                             </div>
                             <div>
-                              <h3>
+                            <h3 id="wallet-balance" data-value="<%= currentUser ? Number(currentUser.balance).toFixed(2) : '0.00' %>">
                                 <%= currentUser ? Number(currentUser.balance).toFixed(2) : '0.00' %>
                                   <%= currentUser ? currentUser.currency : 'USD' %>
                               </h3>
@@ -57,13 +65,18 @@
                               <div class="col-md-12">
                                 <form id="wallet-deposit-form" method="post" action="/wallet/deposit">
                                   <div class="input-group">
-                                  <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
-                                  <div class="input-group-prepend">
-                                    <select name="method" id="method" class="form-control btn btn-success" required>
-                                      <option value="bitcoin" selected>Bitcoin</option>
-                                    </select>
+                                    <input type="hidden" name="method" value="bitcoin">
+                                    <div class="input-group-prepend">
+                                      <select id="withdraw-method" class="form-control" required data-withdraw-methods='<%- JSON.stringify(withdrawalMethods && withdrawalMethods.length ? withdrawalMethods : ["bitcoin"]) %>'>
+                                        <% if (withdrawalMethods && withdrawalMethods.length) { %>
+                                          <option value="<%= withdrawalMethods[0] %>"><%= withdrawalMethods[0].charAt(0).toUpperCase() + withdrawalMethods[0].slice(1) %></option>
+                                        <% } else { %>
+                                          <option value="bitcoin" selected>Bitcoin</option>
+                                        <% } %>
+                                      </select>
+                                    </div>
+                                    <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
                                   </div>
-                                </div> 
                                 </form>
                               </div>
                             </div>
@@ -105,7 +118,7 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Latest Transactions</h5>
-                        <div class="wallet-history" id="wallet-history">
+                        <div class="wallet-withdrawal-history" id="wallet-withdrawal-history">
                           <table class="table">
                             <thead>
                               <tr>
@@ -153,6 +166,62 @@
                                   <td colspan="5" class="text-center">No deposit transactions yet.</td>
                                 </tr>
                               <% } %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Latest Withdrawals</h5>
+                        <div class="wallet-history" id="wallet-history">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>No.</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                              <tbody>
+                              <% if (withdrawalEntries && withdrawalEntries.length) { %>
+                                  <% withdrawalEntries.forEach(function(entry, index) { %>
+                                    <tr>
+                                      <td><%= index + 1 %></td>
+                                      <td><%= entry.created_at ? entry.created_at.toISOString().slice(0, 10) : '' %></td>
+                                      <td>
+                                        <% if (entry.confirmation_status === 'completed') { %>
+                                          <i title="<%= entry.confirmation_status %>" class="icon ion-md-checkmark-circle-outline green"></i>
+                                        <% } else if (entry.confirmation_status === 'failed') { %>
+                                          <i title="<%= entry.confirmation_status %>" class="icon ion-md-close-circle-outline red"></i>
+                                        <% } else { %>
+                                          <i title="<%= entry.confirmation_status %>" class="icon ion-md-time text-warning"></i>
+                                        <% } %>
+                                      </td>
+                                      <td><%= Number(entry.amount).toFixed(8) %></td>
+                                      <td><%= entry.method %></td>
+                                      <td>
+                                        <% var isOwner = false; if (entry.user) { try { isOwner = (currentUser && (entry.user._id ? entry.user._id.toString() : entry.user.toString()) === currentUser._id.toString()); } catch(e) { isOwner = false; } } %>
+                                        <a href="/wallet/withdrawal/<%= entry._id %>" class="btn btn-sm btn-outline-primary mr-2">View</a>
+                                        <% if (currentUser && currentUser.role === 'admin' && entry.confirmation_status !== 'completed') { %>
+                                          <form method="post" action="/wallet/approve-withdrawal/<%= entry._id %>" onsubmit="return confirm('Approve this withdrawal?');" style="display:inline;margin-right:8px;">
+                                            <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                          </form>
+                                        <% } %>
+                                        <% if (currentUser && (currentUser.role === 'admin' || isOwner) && entry.confirmation_status !== 'completed') { %>
+                                          <a href="javascript:void(0);" onclick="if(confirm('Are you sure you want to cancel this withdrawal?')) { window.location.href = '/wallet/delete-withdrawal/<%= entry._id %>'; }" class="text-danger"><i class="icon ion-md-trash"></i></a>
+                                        <% } %>
+                                      </td>
+                                    </tr>
+                                  <% }) %>
+                                <% } else { %>
+                                  <tr>
+                                    <td colspan="6" class="text-center">No withdrawal transactions yet.</td>
+                                  </tr>
+                                <% } %>
                             </tbody>
                           </table>
                         </div>

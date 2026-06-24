@@ -30,7 +30,7 @@ module.exports = {
     TradeStatuses: {
         OPEN: 'open',
         CLOSED: 'closed',
-        CANCELLED: 'cancelled'
+        CANCELLED: 'canceled'
     },
     OrderStatuses: {
         PENDING: 'pending',

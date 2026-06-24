@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= currentUser ? currentUser.firstname + "'s " : '' %><%= title %></title>
+  <link rel="icon" href="/assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/header.html') %>
+  <div class="settings mtb15">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Withdraw Funds</h5>
+              <p class="text-muted">Enter withdrawal details for <strong><%= method %></strong> and submit your request.</p>
+              <% if (typeof error !== 'undefined' && error) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <%= error %>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="width: 20px; height: 20px;">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              <% } %>
+              <form method="post" action="/wallet/withdraw">
+                <div class="form-group">
+                  <label>Withdrawal Amount</label>
+                  <input type="text" class="form-control" value="<%= amount %>" disabled>
+                </div>
+                <div class="form-group">
+                  <label>Withdrawal Method</label>
+                  <select name="method" id="withdraw-method" class="form-control" required>
+                    <% withdrawalMethods.forEach(function(item) { %>
+                      <option value="<%= item %>" <%= item === method ? 'selected' : '' %>><%= item %></option>
+                    <% }) %>
+                  </select>
+                </div>
+                <div id="withdraw-address-fields">
+                  <% const detailFields = withdrawalDetailsTypes[method.toUpperCase()]; %>
+                  <% Object.keys(detailFields).forEach(function(field) { %>
+                    <div class="form-group">
+                      <label><%= field.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) %></label>
+                      <input type="text" name="<%= field %>" class="form-control" placeholder="Enter <%= field.replace(/_/g, ' ') %>" required>
+                    </div>
+                  <% }) %>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Withdrawal Request</button>
+                <a href="/wallet" class="btn btn-secondary ml-2">Cancel</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/jquery-3.4.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script>
+    var withdrawalDetailsTypes = <%- JSON.stringify(withdrawalDetailsTypes) %>;
+
+    function renderWithdrawFields(method) {
+      var fields = withdrawalDetailsTypes[method.toUpperCase()] || {};
+      var html = '';
+
+      Object.keys(fields).forEach(function(field) {
+        var label = field.replace(/_/g, ' ').replace(/\b\w/g, function(match) {
+          return match.toUpperCase();
+        });
+
+        html += '<div class="form-group">';
+        html += '<label>' + label + '</label>';
+        html += '<input type="text" name="' + field + '" class="form-control" placeholder="Enter ' + label + '" required>';
+        html += '</div>';
+      });
+
+      $('#withdraw-address-fields').html(html);
+    }
+
+    $('#withdraw-method').on('change', function() {
+      renderWithdrawFields($(this).val());
+    });
+  </script>
+</body>
+
+</html>

@@ -939,10 +939,6 @@
     var $walletCard = $('#wallet-address');
     var $walletValue = $('#wallet-address-value');
 
-    $('#deposit-wallet-btn').on('click', function () {
-      $walletCard.toggleClass('d-none');
-    });
-
     $('#wallet-address-copy').on('click', function () {
       if (!$walletValue.length) {
         return;
@@ -968,6 +964,11 @@
       setTimeout(function () {
         $button.html('<i class="icon ion-md-copy"></i>');
       }, 1500);
+    });
+
+    $('#confirm-deposit-btn').on('click', function () {
+      $walletCard.addClass('d-none');
+      alert('Payment will be confirmed in 15mins-90mins');
     });
   }
 

@@ -55,9 +55,9 @@
                           <li class="w-100">
                             <div class="row">
                               <div class="col-md-12">
-                                <form method="post" action="/wallet/deposit">
+                                <form id="wallet-deposit-form" method="post" action="/wallet/deposit">
                                   <div class="input-group">
-                                  <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)">
+                                  <input type="text" name="amount" id="amount" class="form-control" placeholder="Enter Amount (0.00)" min="10" required>
                                   <div class="input-group-prepend">
                                     <select name="method" id="method" class="form-control" required>
                                       <option value="bitcoin" selected>Bitcoin</option>
@@ -69,13 +69,13 @@
                             </div>
                           </li>
                         </ul>
-                        <button id="deposit-wallet-btn" type="button" class="btn text-dark green">Deposit <i
+                        <button id="deposit-wallet-btn" type="submit" form="wallet-deposit-form" class="main-btn btn text-dark green">Deposit <i
                             class="icon ion-md-arrow-down"></i></button>
-                        <button onclick="location.href='/wallet/withdraw'" type="button" class="btn btn-dark">Withdraw
+                        <button onclick="location.href='/wallet/withdraw'" type="button" class="main-btn btn btn-dark">Withdraw
                           <i class="icon ion-md-arrow-up"></i></button>
                       </div>
                     </div>
-                    <div class="card d-none" id="wallet-address">
+                    <div class="card <%= showWalletCard ? '' : 'd-none' %>" id="wallet-address">
                       <div class="card-body">
                         <h5 class="card-title">Wallet Deposit Address</h5>
                         <div class="row wallet-address">
@@ -97,7 +97,7 @@
                             </div>
                           </div>
                           <div class="col-md-12">
-                            <button class="btn btn-success">Confirm as Sent</button>
+                            <button id="confirm-deposit-btn" type="button" class="btn btn-success">Confirm as Sent</button>
                           </div>
                         </div>
                       </div>
@@ -114,44 +114,45 @@
                                 <th>Status</th>
                                 <th>Amount</th>
                                 <th>Method</th>
+                                <th>Action</th>
                               </tr>
                             </thead>
-                            <tbody>
-                              <tr>
-                                <td>1</td>
-                                <td>25-04-2019</td>
-                                <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
-                                <td>4.5454334</td>
-                                <td>Bitcoin</td>
-                              </tr>
-                              <tr>
-                                <td>2</td>
-                                <td>25-05-2019</td>
-                                <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
-                                <td>0.5484468</td>
-                                <td>Bitcoin</td>
-                              </tr>
-                              <tr>
-                                <td>3</td>
-                                <td>25-06-2019</td>
-                                <td><i class="icon ion-md-close-circle-outline red"></i></td>
-                                <td>2.5454545</td>
-                                <td>Bitcoin</td>
-                              </tr>
-                              <tr>
-                                <td>4</td>
-                                <td>25-07-2019</td>
-                                <td><i class="icon ion-md-checkmark-circle-outline green"></i></td>
-                                <td>1.45894147</td>
-                                <td>Bitcoin</td>
-                              </tr>
-                              <tr>
-                                <td>5</td>
-                                <td>25-08-2019</td>
-                                <td><i class="icon ion-md-close-circle-outline red"></i></td>
-                                <td>2.5454545</td>
-                                <td>Bitcoin</td>
-                              </tr>
+                              <tbody>
+                              <% if (depositEntries && depositEntries.length) { %>
+                                <% depositEntries.forEach(function(entry, index) { %>
+                                  <tr>
+                                    <td><%= index + 1 %></td>
+                                    <td><%= entry.created_at ? entry.created_at.toISOString().slice(0, 10) : '' %></td>
+                                    <td>
+                                      <% if (entry.confirmation_status === 'completed') { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-checkmark-circle-outline green"></i>
+                                      <% } else if (entry.confirmation_status === 'failed') { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-close-circle-outline red"></i>
+                                      <% } else { %>
+                                        <i title="<%= entry.confirmation_status %>" class="icon ion-md-time text-warning"></i>
+                                      <% } %>
+                                    </td>
+                                    <td><%= Number(entry.amount).toFixed(8) %></td>
+                                    <td><%= entry.method %></td>
+                                    <td>
+                                      <div class="d-flex align-items-center">
+                                        <% if (currentUser && currentUser.role === 'admin' && entry.confirmation_status !== 'completed') { %>
+                                          <form method="post" action="/wallet/confirm-deposit/<%= entry._id %>" onsubmit="return confirm('Are you sure you want to confirm this deposit?');" style="display:inline;margin-right:8px;">
+                                            <button type="submit" class="btn btn-sm btn-success text-center">Confirm</button>
+                                          </form>
+                                        <% } %>
+                                        <% if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'member') && entry.confirmation_status !== 'completed') { %>
+                                          <a href="javascript:void(0);" onclick="if(confirm('Are you sure you want to delete this deposit?')) { window.location.href = '/wallet/delete-deposit/<%= entry._id %>'; }" class="text-danger text-center"><i class="icon ion-md-trash"></i></a>
+                                        <% } %>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                <% }) %>
+                              <% } else { %>
+                                <tr>
+                                  <td colspan="5" class="text-center">No deposit transactions yet.</td>
+                                </tr>
+                              <% } %>
                             </tbody>
                           </table>
                         </div>

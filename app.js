@@ -16,6 +16,7 @@ var profileRouter = require('./routes/profile');
 var settingsRouter = require('./routes/settings');
 var tradingRouter = require('./routes/trading');
 var walletRouter = require('./routes/wallet');
+var constants = require('./utils/constants');
 
 var app = express();
 
@@ -26,6 +27,7 @@ require('./config/passport')(passport)
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
+app.locals.Symbols = constants.Symbols;
 
 
 app.use(logger('dev'));

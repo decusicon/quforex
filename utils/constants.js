@@ -30,11 +30,15 @@ module.exports = {
     TradeStatuses: {
         OPEN: 'open',
         CLOSED: 'closed',
-        CANCELLED: 'canceled'
+        CANCELED: 'canceled'
     },
-    OrderStatuses: {
-        PENDING: 'pending',
-        COMPLETED: 'completed'
+    TradeExecutionTypes: {
+        PROFIT: 'profit',
+        LOSS: 'loss'
+    },
+    TradeTypes: {
+        BUY: 'buy',
+        SELL: 'sell'
     },
     Symbols: {
         CryptoPairs: {

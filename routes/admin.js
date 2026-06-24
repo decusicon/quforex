@@ -9,6 +9,7 @@ function ensureAdmin(req, res, next) {
 var Account = require('../database/schemas/account.schemas');
 var Deposit = require('../database/schemas/deposit.schemas');
 var Withdrawal = require('../database/schemas/withdrawal.schemas');
+var Trade = require('../database/schemas/trade.schemas');
 
 /* GET home page. */
 // Apply authentication and admin checks to all admin routes
@@ -55,6 +56,76 @@ router.get('/withdrawals', ensureAuthenticated, async function (req, res, next) 
   try {
     const withdrawalEntries = await Withdrawal.find().populate('user').sort({ created_at: -1 });
     res.render('admin-withdrawals', { title: 'Withdrawals | Quantora Forex', withdrawalEntries });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/trades', async function (req, res, next) {
+  try {
+    const tradeEntries = await Trade.find().populate('user').sort({ created_at: -1 });
+    res.render('admin-trades', { title: 'Trades | Quantora Forex', tradeEntries });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/trades/:tradeId', async function (req, res, next) {
+  try {
+    const trade = await Trade.findById(req.params.tradeId).populate('user');
+    if (!trade) return res.redirect('/admin/trades');
+    res.render('admin-trade', { title: 'Trade | Quantora Forex', trade });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/trades/:tradeId/update', async function (req, res, next) {
+  try {
+    const updates = {};
+    if (typeof req.body.stopLoss !== 'undefined') updates.stop_loss = req.body.stopLoss;
+    if (typeof req.body.takeProfit !== 'undefined') updates.take_profit = req.body.takeProfit;
+    if (typeof req.body.execution_type !== 'undefined') updates.execution_type = req.body.execution_type;
+    if (typeof req.body.traded_status !== 'undefined') updates.traded_status = req.body.traded_status;
+
+    await Trade.updateOne({ _id: req.params.tradeId }, updates);
+    res.redirect('/admin/trades/' + req.params.tradeId);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/trades/:tradeId/execute', async function (req, res, next) {
+  try {
+    await Trade.updateOne({ _id: req.params.tradeId }, { traded_status: 'completed' });
+    res.redirect('/admin/trades');
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/trades/:tradeId/close', async function (req, res, next) {
+  try {
+    await Trade.updateOne({ _id: req.params.tradeId }, { traded_status: 'closed' });
+    res.redirect('/admin/trades');
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/trades/:tradeId/cancel', async function (req, res, next) {
+  try {
+    await Trade.updateOne({ _id: req.params.tradeId }, { traded_status: 'canceled' });
+    res.redirect('/admin/trades');
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/trades/:tradeId/delete', async function (req, res, next) {
+  try {
+    await Trade.deleteOne({ _id: req.params.tradeId });
+    res.redirect('/admin/trades');
   } catch (err) {
     next(err);
   }

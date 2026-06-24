@@ -3,9 +3,10 @@
   <a class="nav-link <%= currentPath && currentPath.indexOf('/wallet') === 0 ? 'active' : '' %>" id="settings-wallet-tab" href="/wallet"><i class="icon ion-md-wallet"></i> Wallet</a>
   <a class="nav-link <%= currentPath && currentPath.indexOf('/settings') === 0 ? 'active' : '' %>" id="settings-tab" href="/settings"><i class="icon ion-md-settings"></i> Settings</a>
   <% if (currentUser && currentUser.role === 'admin') { %>
-    <hr>
+    <small class="nav-link d-block text-grey">ADMIN</small>
     <a class="nav-link <%= currentPath && currentPath.indexOf('/admin/members') === 0 ? 'active' : '' %>" id="admin-members-tab" href="/admin/members"><i class="icon ion-md-people"></i> Members</a>
     <a class="nav-link <%= currentPath && currentPath.indexOf('/admin/deposits') === 0 ? 'active' : '' %>" id="admin-deposits-tab" href="/admin/deposits"><i class="icon ion-md-wallet"></i> Deposits</a>
     <a class="nav-link <%= currentPath && currentPath.indexOf('/admin/withdrawals') === 0 ? 'active' : '' %>" id="admin-withdrawals-tab" href="/admin/withdrawals"><i class="icon ion-md-card"></i> Withdrawals</a>
+    <a class="nav-link <%= currentPath && currentPath.indexOf('/admin/trades') === 0 ? 'active' : '' %>" id="admin-trades-tab" href="/admin/trades"><i class="icon ion-md-trending-up"></i> Trades</a>
   <% } %>
 </div>

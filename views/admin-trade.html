@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <%= currentUser && currentUser.role === 'admin' ? 'Admin ' : '' %><%= title %></title>
+  <link rel=" icon" href="/assets/img/favicon.png" type="image/x-icon">
+      <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/header.html') %>
+  <div class="settings mtb15">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 col-lg-3">
+          <%- include('partials/settings-menu.html') %>
+        </div>
+        <div class="col-md-12 col-lg-9">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="settings-wallet" role="tabpanel"
+              aria-labelledby="settings-wallet-tab">
+              <div class="wallet">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="coinBTC" role="tabpanel">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Trade Detail</h5>
+                        <div class="wallet-history" id="wallet-history">
+                          <table class="table">
+                            <tbody>
+                              <tr>
+                                <td><strong>Trade ID</strong></td>
+                                <td><%= trade._id %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>User</strong></td>
+                                <td><%= trade.user ? (trade.user.email || (trade.user.firstname + ' ' + trade.user.lastname)) : 'Unknown' %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Symbol</strong></td>
+                                <td><%= trade.symbol %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Type</strong></td>
+                                <td><%= trade.trade_type %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Volume</strong></td>
+                                <td><%= trade.volume %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Stop Loss</strong></td>
+                                <td><%= trade.stop_loss %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Take Profit</strong></td>
+                                <td><%= trade.take_profit %></td>
+                              </tr>
+                              <tr>
+                                <td><strong>Status</strong></td>
+                                <td><%= trade.traded_status %></td>
+                              </tr>
+                            </tbody>
+                          </table>
+
+                          <form method="post" action="/admin/trades/<%= trade._id %>/update">
+                            <div class="form-group">
+                              <label>Stop Loss</label>
+                              <input type="text" name="stopLoss" class="form-control" value="<%= trade.stop_loss %>">
+                            </div>
+                            <div class="form-group">
+                              <label>Take Profit</label>
+                              <input type="text" name="takeProfit" class="form-control" value="<%= trade.take_profit %>">
+                            </div>
+                            <div class="form-group">
+                              <label>Status</label>
+                              <select name="traded_status" class="form-control">
+                                <option value="open" <%= trade.traded_status === 'open' ? 'selected' : '' %>>Open</option>
+                                <option value="closed" <%= trade.traded_status === 'closed' ? 'selected' : '' %>>Closed</option>
+                                <option value="canceled" <%= trade.traded_status === 'canceled' ? 'selected' : '' %>>Canceled</option>
+                                <option value="completed" <%= trade.traded_status === 'completed' ? 'selected' : '' %>>Completed</option>
+                              </select>
+                            </div>
+                            <div class="form-row">
+                              <div class="col-md-3">
+                                <button type="submit" class="btn btn-primary" onclick="return confirm('Save changes to this trade?');">Save</button>
+                              </div>
+                              <div class="col-md-3">
+                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/execute" formmethod="post" class="btn btn-success" onclick="return confirm('Are you sure you want to execute this trade?');">Execute</button>
+                              </div>
+                              <div class="col-md-3">
+                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/close" formmethod="post" class="btn btn-info" onclick="return confirm('Are you sure you want to close this trade?');">Close</button>
+                              </div>
+                              <div class="col-md-3">
+                                <button type="submit" formaction="/admin/trades/<%= trade._id %>/cancel" formmethod="post" class="btn btn-warning" onclick="return confirm('Are you sure you want to cancel this trade?');">Cancel</button>
+                              </div>
+                            </div>
+                          </form>
+
+                          <div style="margin-top:12px;">
+                            <a href="/admin/trades" class="btn btn-secondary">Back to Trades</a>
+                            <form method="post" action="/admin/trades/<%= trade._id %>/delete" style="display:inline; margin-left:8px;" onsubmit="return confirm('Delete this trade?');">
+                              <button type="submit" class="btn btn-danger">Delete Trade</button>
+                            </form>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/jquery-3.4.1.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/amcharts-core.min.js"></script>
+  <script src="/assets/js/amcharts.min.js"></script>
+  <script src="/assets/js/custom.js"></script>
+</body>
+
+
+</html>

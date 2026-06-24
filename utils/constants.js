@@ -30,7 +30,8 @@ module.exports = {
     TradeStatuses: {
         OPEN: 'open',
         CLOSED: 'closed',
-        CANCELED: 'canceled'
+        CANCELED: 'canceled',
+        COMPLETED: 'completed'
     },
     TradeExecutionTypes: {
         MARKET: 'market',

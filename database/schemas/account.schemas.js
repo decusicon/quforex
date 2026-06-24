@@ -11,6 +11,7 @@ const accountSchema = new Schema(
     phone: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true },
+    language: { type: String, required: true, default: 'English' },
     reset_password_token: { type: String },
     reset_password_expires: { type: Date },
     currency: { type: String, required: true },

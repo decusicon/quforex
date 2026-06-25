@@ -28,7 +28,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
 app.locals.Symbols = constants.Symbols;
-app.locals.mainurl = process.env.MAIN_URL || 'http://localhost:' + process.env.PORT;
+app.locals.mainurl = process.env.MAINURL || 'http://localhost:' + process.env.PORT;
 
 
 app.use(logger('dev'));

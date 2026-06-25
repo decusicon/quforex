@@ -1,4 +1,4 @@
-@import url("http://fonts.googleapis.com/css?family=Overpass:300,400,600,700&amp;display=swap");
+@import url("https://fonts.googleapis.com/css?family=Overpass:300,400,600,700&amp;display=swap");
 @import url("bootstrap.min.css");
 @import url("ionicons.min.css");
 @import url("jquery.mCustomScrollbar.min.css");
@@ -153,6 +153,14 @@ tbody tr:hover {
 .sm-gutters {
     padding-left: 7.5px;
     padding-right: 7.5px;
+}
+
+.bg-none {
+    background: transparent !important;
+}
+
+.no-bg {
+    background-color: transparent !important;
 }
 
 .sm-gutters > .col,

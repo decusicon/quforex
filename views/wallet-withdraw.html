@@ -8,8 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title><%= currentUser ? currentUser.firstname + "'s " : '' %><%= title %></title>
-  <link rel="icon" href="./assets/img/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="icon" href="<%= mainurl ? mainurl + '/' : './' %>assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="<%= mainurl ? mainurl + '/' : './' %>assets/css/style.css">
 </head>
 
 <body id="dark">
@@ -62,9 +62,9 @@
     </div>
   </div>
 
-  <script src="./assets/js/jquery-3.4.1.min.js"></script>
-  <script src="./assets/js/popper.min.js"></script>
-  <script src="./assets/js/bootstrap.min.js"></script>
+  <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/jquery-3.4.1.min.js"></script>
+  <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/popper.min.js"></script>
+  <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/bootstrap.min.js"></script>
   <script>
     var withdrawalDetailsTypes = <%- JSON.stringify(withdrawalDetailsTypes) %>;
 

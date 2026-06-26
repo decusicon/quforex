@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="icon" href="<%= mainurl ? mainurl + '/' : './' %>assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="<%= mainurl ? mainurl + '/' : './' %>assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/main-header.html') %>
+
+    <div class="landing-hero">
+      <div class="container">
+        <div class="row">
+          <div class="offset-md-2 col-md-8 text-center">
+            <h2>Risk Managements</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-feature landing-start">
+      <div class="service-details text-left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7 col-xs-12">
+              <div class="theme-title-one">
+                <h2>1. Avoid Weekend Gaps</h2>
+              </div>
+            </div>
+
+          </div>
+          <div class="details-text-wrapper">
+            <div class="row">
+              <div class="col-md-11 col-xs-12">
+                <p>Many market participants are knowledgeable of the fact that most popular markets close their doors on
+                  Friday afternoon Eastern Time in the US. Investors pack up their things for the weekend, and charts
+                  around
+                  the world freeze as if prices remain at that level until the next time they are able to be traded.
+                  However,
+                  that frozen position is a fallacy; it isn’t real. Prices are still moving to and fro based on the
+                  happenings
+                  of that particular weekend, and can move drastically from where they were on Friday until the time
+                  they are
+                  visible again after the weekend.</p>
+                <p>This can create “gaps” in the market that can actually run beyond your intended stop loss or profit
+                  target.
+                  For the latter, it would be a good thing, for the former – not so much. There is a possibility you
+                  could
+                  take a larger loss than you intended because a stop loss is executed at the best available price after
+                  the
+                  stop is triggered; which could be much worse than you planned.</p>
+                <p>While gaps aren’t necessarily common, they do occur, and can catch you off guard. As in the
+                  illustration
+                  below, the gaps can be extremely large and could jump right over a stop if it was placed somewhere
+                  within
+                  that gap. To avoid them, simply exit your trade before the weekend hits, and perhaps even look to
+                  exploit
+                  them by using a gap-trading technique.</p>
+
+              </div>
+              <div class="col-xs-12"><img src="<%= mainurl ? mainurl + '/' : './' %>assets/img/landing/graph.png"
+                  alt=""></div>
+              <div class="service-details">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-7 col-xs-12">
+                      <div class="theme-title-one"><br><br><br>
+                        <h2>2.Customize Your Contracts</h2>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="details-text-wrapper">
+                    <div class="row">
+                      <div class="col-md-11 col-xs-12">
+                        <p>The amounts of methodologies to use in trading are virtually endless. Some methods have you
+                          use a
+                          very specific stop loss and profit target on each trade you place while others vary greatly on
+                          the
+                          subject. For instance, if you use a strategy that calls for a 20-pip stop loss on each trade
+                          and you
+                          only trade the EUR/USD, it would be easy to figure out how many contracts you may want to
+                          enter to
+                          achieve your desired result. However, for those strategies that vary on the size of stops or
+                          even
+                          the instrument traded, figuring out the amount of contracts to enter can get a little tricky.
+                        </p>
+                        <p>One of the easiest ways to make sure you are getting as close to the amount of money that you
+                          want
+                          to risk on each trade is to customize your position sizes. A standard lot in a currency trade
+                          is
+                          100,000 units of currency, which represents $10/pip on the EUR/USD if you have the U.S. dollar
+                          (USD)
+                          as your base currency; a mini lot is 10,000.</p>
+                      </div>
+
+                      <div class="col-xs-12"><img
+                          src="https://www.forex.com/~/media/forex/images/education/articles/managing-risk/position-sizes.svg"
+                          alt=""></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-sub">
+      <div class="container">
+        <div class="row">
+          <div class="offset-md-1 col-md-10">
+            <div class="landing-sub-content">
+              <h2>I'm ready to talk about my trading experience
+                and financial goal!</h2>
+              <h2>We're excited to hear it, and you'll be even more excited when you schedule your free
+                consultation. Start your journey today and experience the future of trading.
+              </h2>
+              <a href='/auth/signup'>FREE CONSULTATION</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-number">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 d-flex justify-content-start align-items-center">
+            <h3>Get a free financial plan consultation</h3>
+          </div>
+          <div class="col-md-4 d-flex justify-content-end align-items-center">
+            <a href='/auth/signup' class="btn btn-light">TRY IT FOR FREE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/main-footer.html') %>
+
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/jquery-3.4.1.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/popper.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/bootstrap.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/amcharts-core.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/amcharts.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/custom.js"></script>
+</body>
+
+
+</html>

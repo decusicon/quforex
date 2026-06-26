@@ -19,6 +19,7 @@ const accountSchema = new Schema(
     member_id: { type: String, required: true },
     verified_status: { type: String, required: true, default: VERIFICATION_STATUS[0], enum: VERIFICATION_STATUS },
     account_type: { type: String, required: true, default: ACCOUNT_TYPES[0], enum: ACCOUNT_TYPES },
+    terms: { type: String, required: true, default: 'on' },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 )

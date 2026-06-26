@@ -2339,6 +2339,32 @@ tbody.ob-heading {
     color: #007bff;
 }
 
+.panel {
+    margin: 4px;
+}
+
+.panel .panel-title {
+    padding: 16px 15px !important;
+    border-radius: 5px;
+    border: 1px solid #2a2e39;
+    color: white;
+    text-align: left;
+}
+
+.address-box {
+    padding: 48px;
+}
+
+.address-box .icon {
+    font-size: 2.5em;
+}
+
+.panel .panel-body {
+    background-color: #2a2e39;
+    padding: 8px;
+    line-height: 24px;
+}
+
 @media only screen and (max-width: 1434px) {
     .market-pairs tbody {
         height: 760px;

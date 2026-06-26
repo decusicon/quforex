@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    <%= title %>
+  </title>
+  <link rel="icon" href="<%= mainurl ? mainurl + '/' : './' %>assets/img/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="<%= mainurl ? mainurl + '/' : './' %>assets/css/style.css">
+</head>
+
+<body id="dark">
+  <%- include('partials/main-header.html') %>
+
+    <div class="landing-hero">
+      <div class="container">
+        <div class="row">
+          <div class="offset-md-2 col-md-8 text-center">
+            <h2>Contact Us</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-feature landing-start">
+      <div class="service-details text-left">
+        <div class="container py-3">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="address-box btn-success">
+                <i class="icon ion-ios-call"></i>
+                <p>Phone : +44 20 31 90 8789</p>
+
+              </div> <!-- /.address-box -->
+            </div>
+            <div class="col-sm-4">
+              <div class="address-box btn-warning">
+                <i class="icon ion-md-mail"></i>
+                <p>Email : support@quantoraforex.org</p>
+
+              </div> <!-- /.address-box -->
+            </div>
+            <div class="col-sm-4">
+              <div class="address-box btn-primary">
+                <i class="icon ion-md-map"></i>
+                <p>132 Regent St., London W1B 5SF <br></p>
+              </div> <!-- /.address-box -->
+            </div>
+          </div>
+
+          <div class="vh-100 d-flex justify-content-center">
+            <div class="form-access my-auto container-fluid">
+              <form method="post" action="/contact">
+                <span>Leave a message</span>
+                <% if (typeof error !=='undefined' && error) { %>
+                  <div class="alert alert-danger alert-dismissible auto-dismiss-alert show" role="alert">
+                    <%= error %>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+                        style="width: 20px; height: 20px;">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <% } %>
+                    <div class="form-group">
+                      <input type="text" name="firstName" id="firstName" class="form-control"
+                        placeholder="Your First Name" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Your Last Name"
+                        required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="country" id="country" class="form-control" placeholder="Your Country"
+                        required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                      <input type="email" name="email" id="email" class="form-control" placeholder="Email Address"
+                        required>
+                    </div>
+                    <hr>
+                    <div class="form-group">
+                      <textarea name="message" id="messagebody" class="form-control" placeholder="Your message"
+                        required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+              <h2>Need an account? <a href='/auth/signup'>Create an Account.</a></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('partials/main-footer.html') %>
+
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/jquery-3.4.1.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/popper.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/bootstrap.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/amcharts-core.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/amcharts.min.js"></script>
+      <script src="<%= mainurl ? mainurl + '/' : './' %>assets/js/custom.js"></script>
+</body>
+
+
+</html>

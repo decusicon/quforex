@@ -10,6 +10,7 @@ var Account = require('../database/schemas/account.schemas');
 var Deposit = require('../database/schemas/deposit.schemas');
 var Withdrawal = require('../database/schemas/withdrawal.schemas');
 var Trade = require('../database/schemas/trade.schemas');
+var Enquiry = require('../database/schemas/enquiry.schema');
 
 /* GET home page. */
 // Apply authentication and admin checks to all admin routes
@@ -184,6 +185,15 @@ router.post('/trades/:tradeId/delete', async function (req, res, next) {
   try {
     await Trade.deleteOne({ _id: req.params.tradeId });
     res.redirect('/admin/trades');
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/enquiries', async function (req, res, next) {
+  try {
+    const enquiries = await Enquiry.find().sort({ created_at: -1 });
+    res.render('admin-enquiries', { title: 'Enquiries | Quantora Forex', enquiries });
   } catch (err) {
     next(err);
   }
